@@ -1,0 +1,52 @@
+FROM alpine as bro-builder
+
+FROM centos:7
+WORKDIR /root
+ENV PATH="${PATH}:/usr/local/bro/bin"
+ENV PATH="${PATH}:/usr/bin"
+
+# copy in the screen -rc
+COPY .screenrc /root
+
+RUN yum -y update && \
+   yum -y install epel-release && \
+   yum -y install python-pip && \
+   yum clean all && \
+   pip install --upgrade pip
+
+# yum -y groupinstall "Development Tools" &&
+
+# install development tools
+RUN yum -y install \
+   bison \
+   cmake \
+   cyrus-sasl \
+   cyrus-sasl-devel \
+   cyrus-sasl-gssapi \   
+   flex \
+   gcc \
+   gcc-c++ \
+   git \
+   libpcap \
+   libpcap-devel \
+   make \
+   openssl-devel \
+   perl \
+   python-devel \
+   swig \
+   zlib-devel
+   
+# install bro
+WORKDIR bro/
+RUN git clone https://github.com/bro/bro && \
+  git checkout v2.5.5 && \
+  git submodule update --init --recursive && \
+  ./configure && \
+  make && \
+  make install
+  
+# install bro-pkg
+RUN pip install bro-pkg && \
+   bro-pkg autoconfig
+  
+WORKDIR /root

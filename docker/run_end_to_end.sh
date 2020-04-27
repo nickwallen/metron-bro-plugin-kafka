@@ -156,35 +156,35 @@ echo "KAFKA_TOPIC      = ${KAFKA_TOPIC}"
 echo "PLUGIN_VERSION   = ${PLUGIN_VERSION}"
 echo "==================================================="
 
-# Create the network
-bash "${SCRIPT_DIR}"/create_docker_network.sh
-rc=$?; if [[ ${rc} != 0 ]]; then
-  exit ${rc}
-fi
+# # Create the network
+# bash "${SCRIPT_DIR}"/create_docker_network.sh
+# rc=$?; if [[ ${rc} != 0 ]]; then
+#   exit ${rc}
+# fi
 
-# Run the zookeeper container
-bash "${SCRIPT_DIR}"/docker_run_zookeeper_container.sh
-rc=$?; if [[ ${rc} != 0 ]]; then
-  exit ${rc}
-fi
-
-# Wait for zookeeper to be up
-bash "${SCRIPT_DIR}"/docker_run_wait_for_zookeeper.sh
-rc=$?; if [[ ${rc} != 0 ]]; then
-  exit ${rc}
-fi
-
-# Run the kafka container
-bash "${SCRIPT_DIR}"/docker_run_kafka_container.sh
-rc=$?; if [[ ${rc} != 0 ]]; then
-  exit ${rc}
-fi
-
-# Wait for kafka to be up
-bash "${SCRIPT_DIR}"/docker_run_wait_for_kafka.sh
-rc=$?; if [[ ${rc} != 0 ]]; then
-  exit ${rc}
-fi
+# # Run the zookeeper container
+# bash "${SCRIPT_DIR}"/docker_run_zookeeper_container.sh
+# rc=$?; if [[ ${rc} != 0 ]]; then
+#   exit ${rc}
+# fi
+# 
+# # Wait for zookeeper to be up
+# bash "${SCRIPT_DIR}"/docker_run_wait_for_zookeeper.sh
+# rc=$?; if [[ ${rc} != 0 ]]; then
+#   exit ${rc}
+# fi
+# 
+# # Run the kafka container
+# bash "${SCRIPT_DIR}"/docker_run_kafka_container.sh
+# rc=$?; if [[ ${rc} != 0 ]]; then
+#   exit ${rc}
+# fi
+# 
+# # Wait for kafka to be up
+# bash "${SCRIPT_DIR}"/docker_run_wait_for_kafka.sh
+# rc=$?; if [[ ${rc} != 0 ]]; then
+#   exit ${rc}
+# fi
 
 # Create the kafka topic
 bash "${SCRIPT_DIR}"/docker_run_create_topic_in_kafka.sh --kafka-topic="${KAFKA_TOPIC}"
